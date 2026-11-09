@@ -10,11 +10,7 @@ async function startServer() {
     throw new Error("PORT must be an integer between 1 and 65535.");
   }
 
-  if (process.env.MONGODB_URI) {
-    await connectToDatabase(process.env.MONGODB_URI);
-  } else {
-    console.warn("MONGODB_URI is not set; starting without a database connection.");
-  }
+  await connectToDatabase();
 
   app.listen(port, () => {
     console.log(`AURA API listening on port ${port}.`);
@@ -23,5 +19,5 @@ async function startServer() {
 
 startServer().catch((error) => {
   console.error("Failed to start the AURA API:", error);
-  process.exitCode = 1;
+  process.exit(1);
 });
