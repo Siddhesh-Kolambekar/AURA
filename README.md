@@ -18,7 +18,7 @@ Copy-Item .env.example .env
 npm run dev
 ```
 
-Set `MONGODB_URI` in `aura-backend/.env` to your MongoDB connection string. The API starts without a database URI for local scaffolding work and logs that it is running in that mode. With the default port, the health endpoint is `http://localhost:5000/api/health`.
+Set `MONGODB_URI` in `aura-backend/.env` to your MongoDB connection string. The backend requires a successful MongoDB connection before it starts listening. With the default port, the health endpoint is `http://localhost:5000/api/v1/health`. Set `CORS_ORIGIN` to a comma-separated list of permitted development origins if you need to change the defaults.
 
 Use `npm start` to run the backend without Nodemon.
 
@@ -31,7 +31,7 @@ Copy-Item .env.example .env
 npm start
 ```
 
-Use the Expo terminal shortcuts or `npm run android`, `npm run ios`, or `npm run web` to choose a target. Set `EXPO_PUBLIC_API_URL` in `aura-mobile/.env` to the backend API URL reachable from your device or simulator.
+Use the Expo terminal shortcuts or `npm run android`, `npm run ios`, or `npm run web` to choose a target. Set `EXPO_PUBLIC_API_URL` in `aura-mobile/.env` to the backend API URL reachable from your device or simulator (for example, `http://localhost:5000/api/v1`).
 
 ## Environment and structure
 
