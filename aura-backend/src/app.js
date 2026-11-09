@@ -6,6 +6,7 @@ const { rateLimit } = require("express-rate-limit");
 
 const errorHandler = require("./middleware/error-handler");
 const notFoundHandler = require("./middleware/not-found");
+const authRoutes = require("./routes/auth.routes");
 const healthRoutes = require("./routes/health.routes");
 
 const app = express();
@@ -47,6 +48,7 @@ app.use(
     }
   })
 );
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/health", healthRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
