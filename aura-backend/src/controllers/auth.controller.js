@@ -1,4 +1,11 @@
-const { getAuthenticatedUser, loginUser, registerUser } = require("../services/auth.service");
+const {
+  getAuthenticatedUser,
+  loginUser,
+  registerUser,
+  requestPasswordReset,
+  resetPassword,
+  revokeAccessToken
+} = require("../services/auth.service");
 
 async function register(request, response, next) {
   try {
@@ -50,4 +57,43 @@ async function getMe(request, response, next) {
   }
 }
 
-module.exports = { getMe, login, register };
+async function forgotPassword(request, response, next) {
+  try {
+    await requestPasswordReset(request.body.email);
+
+    return response.status(202).json({
+      success: true,
+      message: "If the account exists, password reset instructions can be sent to the registered address."
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function resetPasswordController(request, response, next) {
+  try {
+    await resetPassword(request.body.token, request.body.password);
+
+    return response.json({
+      success: true,
+      message: "Password has been reset successfully."
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function logout(request, response, next) {
+  try {
+    await revokeAccessToken(request.auth.tokenHash, request.auth.expiresAt);
+
+    return response.json({
+      success: true,
+      message: "Logged out successfully. This access token has been revoked."
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
+module.exports = { forgotPassword, getMe, login, logout, register, resetPassword: resetPasswordController };

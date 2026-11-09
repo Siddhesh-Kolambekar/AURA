@@ -63,6 +63,14 @@ const userSchema = new mongoose.Schema(
     isPhoneVerified: {
       type: Boolean,
       default: false
+    },
+    passwordResetTokenHash: {
+      type: String,
+      select: false
+    },
+    passwordResetExpiresAt: {
+      type: Date,
+      select: false
     }
   },
   { timestamps: true }
@@ -150,6 +158,8 @@ userSchema.methods.comparePassword = function comparePassword(password) {
 
 function removePassword(_document, result) {
   delete result.password;
+  delete result.passwordResetTokenHash;
+  delete result.passwordResetExpiresAt;
   return result;
 }
 
