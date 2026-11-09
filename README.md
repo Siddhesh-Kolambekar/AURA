@@ -18,7 +18,7 @@ Copy-Item .env.example .env
 npm run dev
 ```
 
-Set `MONGODB_URI` in `aura-backend/.env` to your MongoDB connection string. The backend requires a successful MongoDB connection before it starts listening. With the default port, the health endpoint is `http://localhost:5000/api/v1/health`. Set `CORS_ORIGIN` to a comma-separated list of permitted development origins if you need to change the defaults.
+Set `MONGODB_URI` in `aura-backend/.env` to your MongoDB connection string and set `JWT_SECRET` to a random secret of at least 32 bytes. `JWT_EXPIRES_IN` controls token lifetime (defaults to `1d`). The backend requires a successful MongoDB connection before it starts listening. With the default port, the health endpoint is `http://localhost:5000/api/v1/health`. Set `CORS_ORIGIN` to a comma-separated list of permitted development origins if you need to change the defaults.
 
 Use `npm start` to run the backend without Nodemon.
 

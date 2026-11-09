@@ -1,7 +1,8 @@
 const express = require("express");
 const { body } = require("express-validator");
 
-const { register } = require("../controllers/auth.controller");
+const { getMe, login, register } = require("../controllers/auth.controller");
+const authenticate = require("../middleware/authenticate");
 const validateRequest = require("../middleware/validate-request");
 
 const router = express.Router();
@@ -39,5 +40,34 @@ router.post(
   validateRequest,
   register
 );
+
+router.post(
+  "/login",
+  [
+    body("email")
+      .isString()
+      .withMessage("Email must be a string.")
+      .bail()
+      .trim()
+      .isEmail()
+      .withMessage("Enter a valid email address.")
+      .bail()
+      .isLength({ max: 254 })
+      .withMessage("Email must not exceed 254 characters.")
+      .normalizeEmail({ gmail_remove_dots: false, gmail_remove_subaddress: false }),
+    body("password")
+      .isString()
+      .withMessage("Password must be a string.")
+      .bail()
+      .isLength({ min: 1, max: 72 })
+      .withMessage("Password must not exceed 72 characters.")
+      .custom((password) => Buffer.byteLength(password, "utf8") <= 72)
+      .withMessage("Password must not exceed 72 bytes.")
+  ],
+  validateRequest,
+  login
+);
+
+router.get("/me", authenticate, getMe);
 
 module.exports = router;

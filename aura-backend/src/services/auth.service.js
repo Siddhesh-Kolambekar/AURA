@@ -1,4 +1,13 @@
 const User = require("../models/user.model");
+const jwt = require("jsonwebtoken");
+const { getJwtConfig } = require("../config/jwt");
+
+function createAuthenticationError() {
+  const error = new Error("Invalid email or password.");
+  error.status = 401;
+  error.code = "INVALID_CREDENTIALS";
+  return error;
+}
 
 async function registerUser({ name, email, password }) {
   const normalizedEmail = email.trim().toLowerCase();
@@ -31,4 +40,32 @@ async function registerUser({ name, email, password }) {
   }
 }
 
-module.exports = { registerUser };
+async function loginUser({ email, password }) {
+  const { secret, expiresIn, issuer } = getJwtConfig();
+  const user = await User.findOne({ email: email.trim().toLowerCase() }).select("+password");
+
+  if (!user || user.authProvider !== "email" || !user.password) {
+    throw createAuthenticationError();
+  }
+
+  const passwordMatches = await user.comparePassword(password);
+
+  if (!passwordMatches) {
+    throw createAuthenticationError();
+  }
+
+  const token = jwt.sign({}, secret, {
+    algorithm: "HS256",
+    subject: user.id,
+    issuer,
+    expiresIn
+  });
+
+  return { token, user: user.toJSON() };
+}
+
+async function getAuthenticatedUser(userId) {
+  return User.findById(userId);
+}
+
+module.exports = { getAuthenticatedUser, loginUser, registerUser };
