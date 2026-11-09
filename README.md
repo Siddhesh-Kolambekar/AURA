@@ -33,7 +33,7 @@ Copy-Item .env.example .env
 npm start
 ```
 
-Use the Expo terminal shortcuts or `npm run android`, `npm run ios`, or `npm run web` to choose a target. Set `EXPO_PUBLIC_API_URL` in `aura-mobile/.env` to the backend API URL reachable from your device or simulator (for example, `http://localhost:5000/api/v1`).
+Use the Expo terminal shortcuts or `npm run android`, `npm run ios`, or `npm run web` to choose a target. Set `EXPO_PUBLIC_API_URL` in `aura-mobile/.env` to the backend API URL reachable from your device or simulator (for example, `http://localhost:5000/api/v1`). Configure the backend `PASSWORD_RESET_URL` as `aura://reset-password` to open reset links in the installed app; the reset screen also allows a code to be pasted manually.
 
 ## Environment and structure
 

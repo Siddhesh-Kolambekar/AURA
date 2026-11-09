@@ -3,7 +3,11 @@
     "name": "AURA",
     "slug": "aura-mobile",
     "version": "1.0.0",
+    "scheme": "aura",
     "orientation": "portrait",
-    "userInterfaceStyle": "automatic"
+    "userInterfaceStyle": "automatic",
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
