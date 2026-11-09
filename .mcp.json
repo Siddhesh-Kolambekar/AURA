@@ -1,0 +1,8 @@
+{
+	"mcpServers": {
+		"walkie": {
+			"url": "https://api.usewalkie.dev/mcp",
+			"type": "http"
+		}
+	}
+}
