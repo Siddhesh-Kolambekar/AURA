@@ -1,2 +1,2 @@
-# Velumi
-is an AI-powered mobile application designed to integrate fashion, beauty and skincare into one personalised digital ecosystem.
+# AURA
+AURA is an AI-powered personal fashion, beauty, skincare and haircare recommendation platform designed to help individuals discover products, styles and routines that suit their personal characteristics and preferences.
