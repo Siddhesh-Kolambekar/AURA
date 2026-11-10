@@ -33,7 +33,7 @@ The authenticated profile endpoints store shared personal, appearance, fashion, 
 - `PUT /api/v1/profile` partially merges supplied profile sections and creates a profile if one does not exist.
 - `PATCH /api/v1/profile/preferences` and `PATCH /api/v1/profile/appearance` update fields in the respective section.
 
-Profile ownership comes from the JWT; `userId` is not accepted in request bodies. All profile fields are optional. For example, use `PUT /api/v1/profile` with `{ "appearance": { "skinTone": "medium" } }`, or send `{ "eyeColour": "hazel" }` to the appearance PATCH endpoint. Partial updates preserve omitted values. Run `npm test` from `aura-backend` to execute the MongoDB-backed integration tests; they use and remove a uniquely named temporary database.
+Profile ownership comes from the JWT; `userId` is not accepted in request bodies. All profile fields are optional. For example, use `PUT /api/v1/profile` with `{ "appearance": { "skinTone": "medium" } }`, or send `{ "eyeColour": "hazel" }` to the appearance PATCH endpoint. Partial updates preserve omitted values; send `null` to clear an optional scalar or an empty array to clear a list. Run `npm test` from `aura-backend` to execute the MongoDB-backed integration tests; they use and remove a uniquely named temporary database.
 
 ## Mobile
 
@@ -45,6 +45,8 @@ npm start
 ```
 
 Use the Expo terminal shortcuts or `npm run android`, `npm run ios`, or `npm run web` to choose a target. Set `EXPO_PUBLIC_API_URL` in `aura-mobile/.env` to the backend API URL reachable from your device or simulator (for example, `http://localhost:5000/api/v1`). Configure the backend `PASSWORD_RESET_URL` as `aura://reset-password` to open reset links in the installed app; the reset screen also allows a code to be pasted manually.
+
+After sign-in, new users are guided through an eight-step profile onboarding flow. Answers are saved as each step is continued, skipped questions remain optional, and existing profile information is loaded when onboarding is opened again. The final summary lets users edit any section; no photo is required.
 
 ## Environment and structure
 

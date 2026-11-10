@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { ForgotPasswordScreen } from "../screens/ForgotPasswordScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 import { LoginScreen } from "../screens/LoginScreen";
+import { OnboardingScreen } from "../screens/OnboardingScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
 import { ResetPasswordScreen } from "../screens/ResetPasswordScreen";
 import { WelcomeScreen } from "../screens/WelcomeScreen";
@@ -37,7 +38,10 @@ export function AppNavigator() {
         }}
       >
         {isAuthenticated ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Welcome" component={WelcomeScreen} />

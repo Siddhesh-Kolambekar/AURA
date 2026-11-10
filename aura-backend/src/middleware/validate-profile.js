@@ -28,6 +28,7 @@ const PROFILE_FIELDS = {
       values: ["casual", "classic", "bohemian", "minimalist", "streetwear", "formal", "sporty", "vintage", "romantic", "edgy"],
       maxItems: 20
     },
+    beautyPreferences: { type: "stringArray", maxItems: 30, maxLength: 200 },
     favouriteColours: { type: "stringArray", maxItems: 30, maxLength: 40 },
     preferredBrands: { type: "stringArray", maxItems: 50, maxLength: 100 },
     budgetRange: {
@@ -58,6 +59,10 @@ function isPlainObject(value) {
 }
 
 function validateValue(value, definition, path, errors) {
+  if (value === null) {
+    return;
+  }
+
   if (definition.type === "object") {
     if (!isPlainObject(value)) {
       errors.push(`${path} must be an object.`);

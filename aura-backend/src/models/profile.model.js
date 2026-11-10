@@ -69,6 +69,7 @@ const profileSchema = new mongoose.Schema(
     },
     preferences: {
       fashionStyles: { type: [String], enum: FASHION_STYLES, default: undefined },
+      beautyPreferences: { type: [String], default: undefined },
       favouriteColours: { type: [String], default: undefined },
       preferredBrands: { type: [String], default: undefined },
       budgetRange: {

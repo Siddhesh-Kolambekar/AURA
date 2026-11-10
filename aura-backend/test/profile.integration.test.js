@@ -120,6 +120,13 @@ test("section patches and partial updates preserve unrelated profile fields", as
   assert.equal(updated.skincare.skinType, "sensitive");
   assert.ok(updated.updatedAt >= beforePut.updatedAt);
 
+  const cleared = await request("/appearance", {
+    method: "PATCH",
+    body: { eyeColour: null }
+  });
+  assert.equal(cleared.status, 200);
+  assert.equal((await cleared.json()).data.profile.appearance.eyeColour, undefined);
+
   const otherProfile = await request("/", { token: tokenFor(otherUserId) });
   assert.equal((await otherProfile.json()).data.profile.personal.ageRange, "18_24");
 });
@@ -155,6 +162,15 @@ test("profile validation rejects unsupported fields, enums, types, and invalid b
 });
 
 test("partial upserts remain scoped to the authenticated user", async () => {
+  const basicUserId = new mongoose.Types.ObjectId().toString();
+  const emptyProfile = await request("/", {
+    token: tokenFor(basicUserId),
+    method: "POST",
+    body: {}
+  });
+  assert.equal(emptyProfile.status, 201);
+  assert.equal((await request("/", { token: tokenFor(basicUserId) })).status, 200);
+
   const newUserId = new mongoose.Types.ObjectId().toString();
   assert.equal((await request("/", { token: tokenFor(newUserId) })).status, 404);
   const partial = await request("/", {
