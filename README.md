@@ -24,6 +24,17 @@ Password recovery uses one-time, hashed reset tokens that expire after 15 minute
 
 Use `npm start` to run the backend without Nodemon.
 
+### User profile API
+
+The authenticated profile endpoints store shared personal, appearance, fashion, skincare, and haircare preferences:
+
+- `GET /api/v1/profile` retrieves the current user's profile.
+- `POST /api/v1/profile` creates the current user's profile.
+- `PUT /api/v1/profile` partially merges supplied profile sections and creates a profile if one does not exist.
+- `PATCH /api/v1/profile/preferences` and `PATCH /api/v1/profile/appearance` update fields in the respective section.
+
+Profile ownership comes from the JWT; `userId` is not accepted in request bodies. All profile fields are optional. For example, use `PUT /api/v1/profile` with `{ "appearance": { "skinTone": "medium" } }`, or send `{ "eyeColour": "hazel" }` to the appearance PATCH endpoint. Partial updates preserve omitted values. Run `npm test` from `aura-backend` to execute the MongoDB-backed integration tests; they use and remove a uniquely named temporary database.
+
 ## Mobile
 
 ```powershell

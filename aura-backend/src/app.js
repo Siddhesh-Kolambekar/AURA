@@ -8,6 +8,7 @@ const errorHandler = require("./middleware/error-handler");
 const notFoundHandler = require("./middleware/not-found");
 const authRoutes = require("./routes/auth.routes");
 const healthRoutes = require("./routes/health.routes");
+const profileRoutes = require("./routes/profile.routes");
 
 const app = express();
 const allowedOrigins = (
@@ -50,6 +51,7 @@ app.use(
 );
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/health", healthRoutes);
+app.use("/api/v1/profile", profileRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
